@@ -1,26 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, SyntheticEvent } from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
-function App() {
+import { TabPanel } from './components/Tabs';
+import Grid from '@mui/material/Grid';
+
+const App = () => {
+  const [value, setValue] = useState(0)
+
+  const getTabProps = (index: number) => {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    }
+  }
+
+  const handleChange = (event: SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Grid container sx={{ backgroundColor: 'white' }}>
+        <Grid container xs={3} alignItems='center' justifyContent='center'>
+          <CurrencyExchangeIcon sx={{ mr: 1 }} /> Currency Exchange
+        </Grid>
+        <Grid item xs={6}>
+          <Tabs centered value={value} onChange={handleChange} aria-label='basic tabs example'>
+            <Tab label='Currency Converter' {...getTabProps(0)} />
+            <Tab label='View Conversion History' {...getTabProps(1)} />
+          </Tabs>
+        </Grid>
+        <Grid container alignItems='center' justifyContent='center' xs={3}>
+          Logout
+        </Grid>
+      </Grid>
+      <TabPanel value={value} index={0}>
+        Item one
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+    </>
+  )
 }
 
-export default App;
+export default App
