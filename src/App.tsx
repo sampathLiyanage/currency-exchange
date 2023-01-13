@@ -5,6 +5,7 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 import { TabPanel } from './components/Tabs';
 import Grid from '@mui/material/Grid';
+import { CurrencyConverter } from './components/CurrencyConverter';
 
 const App = () => {
   const [value, setValue] = useState(0)
@@ -36,7 +37,7 @@ const App = () => {
         </Grid>
       </Grid>
       <TabPanel value={value} index={0}>
-        Item one
+        <CurrencyConverter/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
