@@ -10,11 +10,11 @@ export interface ConvertResult {
 }
 
 export interface HistoryResult {
-    data: {[key: string]: string};
-    lowest: number,
-    highest: number,
-    average: number
-};
+  data: { [key: string]: string };
+  lowest: number;
+  highest: number;
+  average: number;
+}
 
 export const fetchAllSymbols = async (): Promise<string[]> => {
   const res = await axios.get('https://api.exchangerate.host/symbols');
@@ -46,8 +46,8 @@ export const fetchHistory = async (
     `https://api.exchangerate.host/timeseries?start_date=${fromDate}&end_date=${toDate}&base=${baseCurrency}&symbols=${targetCurrency}`,
   );
   const rates = res.data.rates;
-  const data: {[key: string]: string} = {};
-  const values: number[] = [] 
+  const data: { [key: string]: string } = {};
+  const values: number[] = [];
   for (const key in rates) {
     data[key] = rates[key][targetCurrency];
     values.push(rates[key][targetCurrency]);
@@ -56,6 +56,6 @@ export const fetchHistory = async (
     data,
     lowest: Math.min(...values),
     highest: Math.max(...values),
-    average: +(values.reduce((a, b) => a + b, 0) / values.length).toFixed(6)
+    average: +(values.reduce((a, b) => a + b, 0) / values.length).toFixed(6),
   };
 };

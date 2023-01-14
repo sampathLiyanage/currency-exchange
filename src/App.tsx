@@ -8,18 +8,18 @@ import Grid from '@mui/material/Grid';
 import { CurrencyConverter } from './components/CurrencyConverter';
 
 const App = () => {
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(0);
 
   const getTabProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
-    }
-  }
+    };
+  };
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
   return (
     <>
       <Grid container sx={{ backgroundColor: 'white' }}>
@@ -37,13 +37,13 @@ const App = () => {
         </Grid>
       </Grid>
       <TabPanel value={value} index={0}>
-        <CurrencyConverter/>
+        <CurrencyConverter />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
       </TabPanel>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

@@ -13,33 +13,33 @@ export const CurrencyConverter = () => {
   const [to, setTo] = useState<string>('0');
   const [results, setResults] = useState<ConvertResult | null>(null);
 
-  const loadSymbols = useCallback(async () : Promise<void> => {
+  const loadSymbols = useCallback(async (): Promise<void> => {
     const symbols = await fetchAllSymbols();
-    setSymbols(symbols.map(symbol => ({label: symbol, value: symbol})));
+    setSymbols(symbols.map((symbol) => ({ label: symbol, value: symbol })));
   }, []);
 
-  const isDisabled = () : boolean => {
+  const isDisabled = (): boolean => {
     return !amount || from === '0' || to === '0';
-  }
+  };
 
   useEffect(() => {
     loadSymbols();
   }, [loadSymbols]);
 
-  const handleAmount = (value: string) : void => {
+  const handleAmount = (value: string): void => {
     const validated = value.match(/^(\d*\.{0,1}\d{0,2}$)/);
     if (validated) {
-       setAmount(value);
+      setAmount(value);
     }
   };
 
-  const swap = () : void => {
+  const swap = (): void => {
     const nextTo = from;
     setFrom(to);
     setTo(nextTo);
   };
 
-  const handleConvert = async () : Promise<void> => {
+  const handleConvert = async (): Promise<void> => {
     setResults(await convert(from, to, +amount));
   };
 
@@ -66,21 +66,25 @@ export const CurrencyConverter = () => {
           <Select value={from} label={'From'} options={symbols} onChange={(val) => setFrom(val)} />
         </Grid>
         <Grid item xs={1}>
-            <Button fullWidth variant="outlined" onClick={() => swap()}><CompareArrowsIcon /></Button>
+          <Button fullWidth variant='outlined' onClick={() => swap()}>
+            <CompareArrowsIcon />
+          </Button>
         </Grid>
         <Grid item xs={3}>
           <Select value={to} label={'To'} options={symbols} onChange={(val) => setTo(val)} />
         </Grid>
         <Grid item xs={1}>
-            <Button disabled={isDisabled()} variant="contained" onClick={() => handleConvert()}>Convert</Button>
+          <Button disabled={isDisabled()} variant='contained' onClick={() => handleConvert()}>
+            Convert
+          </Button>
         </Grid>
       </Grid>
       {results && (
-      <>
-        <Results results={results} />
-        <Divider />
-        <ExchangeHistory baseCurrency={results.from} targetCurrency={results.to} />
-      </>
+        <>
+          <Results results={results} />
+          <Divider />
+          <ExchangeHistory baseCurrency={results.from} targetCurrency={results.to} />
+        </>
       )}
     </>
   );

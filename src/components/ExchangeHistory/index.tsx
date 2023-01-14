@@ -54,7 +54,11 @@ const ExchangeHistory = (props: ExchangeHistoryProps) => {
             <HistoryTable data={history ? history.data : {}} />
           </Grid>
           <Grid item xs={6}>
-            <HistoryStatsTable lowest={history ? history.lowest : 0} highest={history ? history.highest : 0} average={history ? history.average : 0} />
+            <HistoryStatsTable
+              lowest={history ? history.lowest : 0}
+              highest={history ? history.highest : 0}
+              average={history ? history.average : 0}
+            />
           </Grid>
         </Grid>
       )}
