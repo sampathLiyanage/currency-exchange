@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, TextField, Divider } from '@mui/material';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
-import { fetchAllSymbols, convert, ConvertResult } from '../services/currency.service';
-import Select from './Select';
+import { fetchAllSymbols, convert, ConvertResult } from '../../services/currency.service';
+import Select, { SelectOption } from '../Select';
+import Results from './Results';
+import ExchangeHistory from '../ExchangeHistory';
 
 export const CurrencyConverter = () => {
-  const [symbols, setSymbols] = useState<string[]>([]);
+  const [symbols, setSymbols] = useState<SelectOption[]>([]);
   const [amount, setAmount] = useState<string>('');
   const [from, setFrom] = useState<string>('0');
   const [to, setTo] = useState<string>('0');
@@ -13,7 +15,7 @@ export const CurrencyConverter = () => {
 
   const loadSymbols = useCallback(async () : Promise<void> => {
     const symbols = await fetchAllSymbols();
-    setSymbols(symbols);
+    setSymbols(symbols.map(symbol => ({label: symbol, value: symbol})));
   }, []);
 
   const isDisabled = () : boolean => {
@@ -64,24 +66,22 @@ export const CurrencyConverter = () => {
           <Select value={from} label={'From'} options={symbols} onChange={(val) => setFrom(val)} />
         </Grid>
         <Grid item xs={1}>
-
             <Button fullWidth variant="outlined" onClick={() => swap()}><CompareArrowsIcon /></Button>
-            
         </Grid>
         <Grid item xs={3}>
           <Select value={to} label={'To'} options={symbols} onChange={(val) => setTo(val)} />
         </Grid>
         <Grid item xs={1}>
-
             <Button disabled={isDisabled()} variant="contained" onClick={() => handleConvert()}>Convert</Button>
-            
         </Grid>
       </Grid>
-      {results && <Grid container alignItems='center' justifyContent='center'>
-        <Grid item xs={12}>{`${results.amount} ${results.from} = ${results.value} ${results.to}`}</Grid>
-        <Grid item xs={12}>{`1 ${results.from} = ${results.rate} ${results.to}`}</Grid>
-        <Grid item xs={12}>{`1 ${results.to} = ${results.oppositeRate} ${results.from}`}</Grid>
-      </Grid>}
+      {results && (
+      <>
+        <Results results={results} />
+        <Divider />
+        <ExchangeHistory baseCurrency={results.from} targetCurrency={results.to} />
+      </>
+      )}
     </>
   );
 };
