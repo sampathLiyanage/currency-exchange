@@ -1,5 +1,5 @@
-import { Grid } from '@mui/material';
-import { format, subDays } from 'date-fns';
+import { Grid, Typography } from '@mui/material';
+import { addMinutes, format, subDays } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { fetchHistory, HistoryResult } from '../../services/currency.service';
 import Select, { SelectOption } from '../Select';
@@ -22,9 +22,10 @@ const ExchangeHistory = (props: ExchangeHistoryProps) => {
   const [history, setHistory] = useState<HistoryResult | null>(null);
 
   const setHistoryData = async () => {
+    const now = new Date();
     const results = await fetchHistory(
-      format(subDays(new Date(), +duration), 'yyyy-MM-dd'),
-      format(new Date(), 'yyyy-MM-dd'),
+      format(subDays(addMinutes(now, now.getTimezoneOffset()), +duration), 'yyyy-MM-dd'),
+      format(addMinutes(now, now.getTimezoneOffset()), 'yyyy-MM-dd'),
       props.baseCurrency,
       props.targetCurrency,
     );
@@ -38,7 +39,10 @@ const ExchangeHistory = (props: ExchangeHistoryProps) => {
   return (
     <>
       <Grid container alignItems='center' justifyContent='baseline' spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={12}>
+          <Typography variant='subtitle1'>Exchange History</Typography>
+        </Grid>
+        <Grid item xs={3} mb={2}>
           <Select
             value={duration}
             label={'Duration'}

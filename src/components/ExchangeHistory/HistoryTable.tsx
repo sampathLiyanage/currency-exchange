@@ -7,6 +7,7 @@ import {
   TableRow,
   TableBody,
   Table,
+  Typography,
 } from '@mui/material';
 
 interface HistoryTableProps {
@@ -19,8 +20,12 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
       <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Exchange rate</TableCell>
+            <TableCell>
+              <Typography variant='h4'>Date</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant='h4'>Exchange rate</Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

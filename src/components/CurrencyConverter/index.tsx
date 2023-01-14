@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Grid, TextField, Divider } from '@mui/material';
+import { Button, Grid, TextField, Divider, Typography } from '@mui/material';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { fetchAllSymbols, convert, ConvertResult } from '../../services/currency.service';
 import Select, { SelectOption } from '../Select';
@@ -46,9 +46,11 @@ export const CurrencyConverter = () => {
   return (
     <>
       <Grid container alignItems='center' justifyContent='baseline'>
-        I Want to Convert
+        <Typography variant='h1' mt={2} mb={4}>
+          I want to convert
+        </Typography>
       </Grid>
-      <Grid container alignItems='center' justifyContent='baseline' spacing={2}>
+      <Grid container alignItems='center' justifyContent='baseline' spacing={2} mb={6}>
         <Grid item xs={3}>
           <TextField
             fullWidth
@@ -66,7 +68,12 @@ export const CurrencyConverter = () => {
           <Select value={from} label={'From'} options={symbols} onChange={(val) => setFrom(val)} />
         </Grid>
         <Grid item xs={1}>
-          <Button fullWidth variant='outlined' onClick={() => swap()}>
+          <Button
+            fullWidth
+            variant='contained'
+            style={{ color: '#404040', backgroundColor: '#ffffff' }}
+            onClick={() => swap()}
+          >
             <CompareArrowsIcon />
           </Button>
         </Grid>
@@ -74,7 +81,12 @@ export const CurrencyConverter = () => {
           <Select value={to} label={'To'} options={symbols} onChange={(val) => setTo(val)} />
         </Grid>
         <Grid item xs={1}>
-          <Button disabled={isDisabled()} variant='contained' onClick={() => handleConvert()}>
+          <Button
+            disabled={isDisabled()}
+            variant='contained'
+            color='primary'
+            onClick={() => handleConvert()}
+          >
             Convert
           </Button>
         </Grid>
@@ -82,7 +94,9 @@ export const CurrencyConverter = () => {
       {results && (
         <>
           <Results results={results} />
-          <Divider />
+          <Grid item mt={2} mb={2}>
+            <Divider />
+          </Grid>
           <ExchangeHistory baseCurrency={results.from} targetCurrency={results.to} />
         </>
       )}
