@@ -50,13 +50,6 @@ export const CurrencyConverter = () => {
     }
   }, [searchParams]);
 
-  const handleAmount = (value: string): void => {
-    const validated = value.match(/^(\d*\.{0,1}\d{0,2}$)/);
-    if (validated) {
-      setAmount(value);
-    }
-  };
-
   const swap = (): void => {
     const nextTo = from;
     setFrom(to);
@@ -74,12 +67,12 @@ export const CurrencyConverter = () => {
   return (
     <>
       <Grid container alignItems='center' justifyContent='baseline'>
-        <Typography variant='h1' mt={4} mb={4}>
+        <Typography component='span' variant='h1' sx={{ mt: { xs: 0, sm: 4 } }} mb={4}>
           I want to convert
         </Typography>
       </Grid>
       <Grid container alignItems='center' justifyContent='baseline' spacing={2} mb={6}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <TextField
             fullWidth
             label='Amount'
@@ -89,13 +82,13 @@ export const CurrencyConverter = () => {
             InputProps={{
               inputProps: { min: 0, step: '.01', pattern: '^\\d*(\\.\\d{0,2})?$' },
             }}
-            onChange={(event) => handleAmount(event.target.value)}
+            onChange={(event) => setAmount(event.target.value)}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <Select value={from} label={'From'} options={symbols} onChange={(val) => setFrom(val)} />
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={12} sm={1}>
           <Button
             fullWidth
             variant='contained'
@@ -105,11 +98,12 @@ export const CurrencyConverter = () => {
             <CompareArrowsIcon />
           </Button>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <Select value={to} label={'To'} options={symbols} onChange={(val) => setTo(val)} />
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={12} sm={1}>
           <Button
+            fullWidth
             disabled={isDisabled()}
             variant='contained'
             color='primary'

@@ -23,22 +23,23 @@ const HistoryStatsTable = (props: HistoryStatsTableProps) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography variant='h4'>Statistics</Typography>
+              <Typography component='span' variant='h4'>
+                Statistics
+              </Typography>
             </TableCell>
-            <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+          <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
             <TableCell>Lowest</TableCell>
             <TableCell>{props.lowest}</TableCell>
           </TableRow>
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+          <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
             <TableCell>Highest</TableCell>
             <TableCell>{props.highest}</TableCell>
           </TableRow>
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+          <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
             <TableCell>Average</TableCell>
             <TableCell>{props.average}</TableCell>
           </TableRow>

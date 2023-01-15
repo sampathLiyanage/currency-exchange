@@ -9,6 +9,7 @@ import {
   Table,
   Typography,
 } from '@mui/material';
+import { format, parseISO } from 'date-fns';
 
 interface HistoryTableProps {
   data: { [key: string]: string };
@@ -21,10 +22,14 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography variant='h4'>Date</Typography>
+              <Typography component='span' variant='h4'>
+                Date
+              </Typography>
             </TableCell>
             <TableCell>
-              <Typography variant='h4'>Exchange rate</Typography>
+              <Typography component='span' variant='h4'>
+                Exchange rate
+              </Typography>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -32,8 +37,8 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
           {Object.keys(data)
             .reverse()
             .map((key) => (
-              <TableRow key={key} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell>{key}</TableCell>
+              <TableRow hover key={key} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell>{format(parseISO(key), 'dd/MM/yyyy')}</TableCell>
                 <TableCell>{data[key]}</TableCell>
               </TableRow>
             ))}

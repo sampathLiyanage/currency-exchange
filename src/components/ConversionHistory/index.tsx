@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router';
 
 import { HistoryRecord, HistoryState } from '../../store';
 import { removeHistory } from '../../store/actionCreators';
+import { format, parseISO } from 'date-fns/esm';
 
 const ConversionHistory = () => {
   const navigate = useNavigate();
@@ -40,22 +41,30 @@ const ConversionHistory = () => {
 
   return (
     <Grid container alignItems='center' justifyContent='baseline' spacing={2}>
-      <Grid item xs={12} mb={4}>
-        <Typography variant='h1'>Conversion history</Typography>
+      <Grid item xs={12} sx={{ mt: { xs: 0, sm: 4 } }} mb={4}>
+        <Typography component='span' variant='h1'>
+          Conversion history
+        </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid component='span' item xs={12}>
         <TableContainer component={Paper}>
-          <Table aria-label='simple table'>
+          <Table>
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography variant='h4'>Date</Typography>
+                  <Typography component='span' variant='h4'>
+                    Date
+                  </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant='h4'>Event</Typography>
+                  <Typography component='span' variant='h4'>
+                    Event
+                  </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant='h4'>Actions</Typography>
+                  <Typography component='span' variant='h4'>
+                    Actions
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -72,14 +81,17 @@ const ConversionHistory = () => {
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell>{record.datetime}</TableCell>
+                  <TableCell>
+                    {format(parseISO(record.datetime ?? ''), 'dd/MM/yyyy @ HH:mm')}
+                  </TableCell>
                   <TableCell>{`Converted an amount of ${record.amount} from ${record.from} to ${record.to}`}</TableCell>
                   <TableCell>
                     <Grid container>
                       <Grid
                         sx={{ visibility: hoveringRow === record.id ? 'visible' : 'hidden' }}
                         item
-                        xs={6}
+                        xs={12}
+                        sm={6}
                       >
                         <Button onClick={() => view(record)} sx={{ textTransform: 'none' }}>
                           <RemoveRedEye sx={{ mr: 1 }} /> View
@@ -88,7 +100,8 @@ const ConversionHistory = () => {
                       <Grid
                         sx={{ visibility: hoveringRow === record.id ? 'visible' : 'hidden' }}
                         item
-                        xs={6}
+                        xs={12}
+                        sm={6}
                       >
                         <Button
                           onClick={() => deleteHistory(record)}

@@ -24,7 +24,7 @@ const ExchangeHistory = (props: ExchangeHistoryProps) => {
   const setHistoryData = async () => {
     const now = new Date();
     const results = await fetchHistory(
-      format(subDays(addMinutes(now, now.getTimezoneOffset()), +duration), 'yyyy-MM-dd'),
+      format(subDays(addMinutes(now, now.getTimezoneOffset()), +duration - 1), 'yyyy-MM-dd'),
       format(addMinutes(now, now.getTimezoneOffset()), 'yyyy-MM-dd'),
       props.baseCurrency,
       props.targetCurrency,
@@ -40,7 +40,9 @@ const ExchangeHistory = (props: ExchangeHistoryProps) => {
     <>
       <Grid container alignItems='center' justifyContent='baseline' spacing={2}>
         <Grid item xs={12}>
-          <Typography variant='subtitle1'>Exchange History</Typography>
+          <Typography component='span' variant='subtitle1'>
+            Exchange History
+          </Typography>
         </Grid>
         <Grid item xs={3} mb={2}>
           <Select
@@ -54,10 +56,10 @@ const ExchangeHistory = (props: ExchangeHistoryProps) => {
       </Grid>
       {history && (
         <Grid container justifyContent='baseline' spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <HistoryTable data={history ? history.data : {}} />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <HistoryStatsTable
               lowest={history ? history.lowest : 0}
               highest={history ? history.highest : 0}

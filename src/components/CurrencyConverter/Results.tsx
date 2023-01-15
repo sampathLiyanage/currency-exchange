@@ -10,10 +10,10 @@ const Results = ({ results }: ResultsProps) => {
   return (
     <Grid container alignItems='center' justifyContent='center'>
       <Grid item xs={12} textAlign='center' mb={2}>
-        <Typography variant='h2' display='inline'>
+        <Typography component='span' variant='h2' display='inline'>
           {`${results.amount} ${results.from} = `}
         </Typography>
-        <Typography variant='h3' color='secondary' display='inline'>
+        <Typography component='span' variant='h3' color='secondary' display='inline'>
           {`${results.value} ${results.to}`}
         </Typography>
       </Grid>

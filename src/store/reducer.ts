@@ -13,7 +13,7 @@ const reducer = (state: HistoryState = initialState, action: HistoryAction): His
         id: state.historyRecords.length
           ? Math.max(...state.historyRecords.map((e) => e.id ?? 0)) + 1
           : 1,
-        datetime: new Date().toUTCString(),
+        datetime: new Date().toISOString(),
         ...action.payload,
       };
       return {

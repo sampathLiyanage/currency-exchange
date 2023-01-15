@@ -40,20 +40,28 @@ const Home = ({ tab = 0 }: HomeProps) => {
         sx={{ backgroundColor: 'white', position: 'sticky', top: 0, zIndex: 1000 }}
       >
         <Grid container>
-          <Grid container xs={3} alignItems='center' justifyContent='center'>
-            <CurrencyExchangeIcon sx={{ mr: 1 }} /> Currency Exchange
+          <Grid item xs={12} sm={3} display='flex' alignItems='center' justifyContent='center'>
+            <Grid
+              item
+              sx={{ mt: { xs: 2, sm: 0 } }}
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+            >
+              <CurrencyExchangeIcon sx={{ mr: 1 }} /> Currency Exchange
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <Tabs centered value={tab} onChange={handleChange} aria-label='basic tabs example'>
-              <Tab label='Currency Converter' {...getTabProps(0)} />
-              <Tab label='View Conversion History' {...getTabProps(1)} />
+          <Grid item xs={12} sm={6}>
+            <Tabs centered value={tab} onChange={handleChange}>
+              <Tab wrapped label='Currency Converter' {...getTabProps(0)} />
+              <Tab wrapped label='View Conversion History' {...getTabProps(1)} />
             </Tabs>
           </Grid>
           <Grid
-            container
+            item
             alignItems='center'
             justifyContent='center'
-            sx={{ cursor: 'pointer' }}
+            sx={{ cursor: 'pointer', display: { xs: 'none', sm: 'flex' } }}
             xs={3}
           >
             LOGOUT
@@ -61,15 +69,11 @@ const Home = ({ tab = 0 }: HomeProps) => {
         </Grid>
       </Paper>
 
-      <TabPanel value={0} index={0}>
-        <Grid item display={tab === 0 ? '' : 'none'}>
-          <CurrencyConverter />
-        </Grid>
+      <TabPanel value={tab} index={0}>
+        <CurrencyConverter />
       </TabPanel>
-      <TabPanel value={1} index={1}>
-        <Grid item display={tab === 1 ? '' : 'none'}>
-          <ConversionHistory />
-        </Grid>
+      <TabPanel value={tab} index={1}>
+        <ConversionHistory />
       </TabPanel>
     </ThemeProvider>
   );
