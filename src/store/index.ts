@@ -1,5 +1,7 @@
-import { createStore, applyMiddleware, Store } from 'redux';
 import thunk from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 
 import reducer from './reducer';
 
@@ -22,8 +24,16 @@ export type HistoryState = {
 
 export type DispatchType = (args: HistoryAction) => HistoryAction;
 
-const store: Store<HistoryState, HistoryAction> & {
-  dispatch: DispatchType;
-} = createStore(reducer, applyMiddleware(thunk));
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: [thunk],
+});
+
+export const persistor = persistStore(store);
