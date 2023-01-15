@@ -13,7 +13,7 @@ export const TabPanel = (props: TabPanelProps) => {
 
   return (
     <div role='tabpanel' style={{ display: value !== index ? 'none' : '' }}>
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 3, ml: { xs: 0, sm: 10 }, mr: { xs: 0, sm: 10 } }}>
         <Typography component='span'>{children}</Typography>
       </Box>
     </div>

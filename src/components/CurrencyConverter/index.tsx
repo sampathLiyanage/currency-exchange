@@ -15,7 +15,7 @@ export const CurrencyConverter = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch: Dispatch<any> = useDispatch();
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [symbols, setSymbols] = useState<SelectOption[]>([]);
   const [amount, setAmount] = useState<string>('');
@@ -46,6 +46,7 @@ export const CurrencyConverter = () => {
         searchParams.get('to') ?? '',
         searchParams.get('amount') ?? '',
       );
+      setSearchParams({});
       window.scrollTo(0, 0);
     }
   }, [searchParams]);
