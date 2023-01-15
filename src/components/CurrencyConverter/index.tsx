@@ -1,12 +1,19 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Button, Grid, TextField, Divider, Typography } from '@mui/material';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
+
 import { fetchAllSymbols, convert, ConvertResult } from '../../services/currency.service';
 import Select, { SelectOption } from '../Select';
 import Results from './Results';
 import ExchangeHistory from '../ExchangeHistory';
+import { addHistory } from '../../store/actionCreators';
 
 export const CurrencyConverter = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dispatch: Dispatch<any> = useDispatch();
+
   const [symbols, setSymbols] = useState<SelectOption[]>([]);
   const [amount, setAmount] = useState<string>('');
   const [from, setFrom] = useState<string>('0');
@@ -41,6 +48,7 @@ export const CurrencyConverter = () => {
 
   const handleConvert = async (): Promise<void> => {
     setResults(await convert(from, to, +amount));
+    dispatch(addHistory({ from, to, amount: +amount }));
   };
 
   return (
