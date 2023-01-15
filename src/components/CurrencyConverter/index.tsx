@@ -9,10 +9,13 @@ import Select, { SelectOption } from '../Select';
 import Results from './Results';
 import ExchangeHistory from '../ExchangeHistory';
 import { addHistory } from '../../store/actionCreators';
+import { useSearchParams } from 'react-router-dom';
 
 export const CurrencyConverter = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch: Dispatch<any> = useDispatch();
+
+  const [searchParams] = useSearchParams();
 
   const [symbols, setSymbols] = useState<SelectOption[]>([]);
   const [amount, setAmount] = useState<string>('');
@@ -33,6 +36,20 @@ export const CurrencyConverter = () => {
     loadSymbols();
   }, [loadSymbols]);
 
+  useEffect(() => {
+    if (searchParams.has('from') && searchParams.has('to') && searchParams.has('amount')) {
+      setFrom(searchParams.get('from') ?? '0');
+      setTo(searchParams.get('to') ?? '0');
+      setAmount(searchParams.get('amount') ?? '');
+      handleConvert(
+        searchParams.get('from') ?? '',
+        searchParams.get('to') ?? '',
+        searchParams.get('amount') ?? '',
+      );
+      window.scrollTo(0, 0);
+    }
+  }, [searchParams]);
+
   const handleAmount = (value: string): void => {
     const validated = value.match(/^(\d*\.{0,1}\d{0,2}$)/);
     if (validated) {
@@ -46,15 +63,18 @@ export const CurrencyConverter = () => {
     setTo(nextTo);
   };
 
-  const handleConvert = async (): Promise<void> => {
-    setResults(await convert(from, to, +amount));
-    dispatch(addHistory({ from, to, amount: +amount }));
+  const handleConvert = async (fromParam = '', toParam = '', amountParam = ''): Promise<void> => {
+    const fromVal = fromParam || from;
+    const toVal = toParam || to;
+    const amountVal = amountParam || amount;
+    setResults(await convert(fromVal, toVal, +amountVal));
+    dispatch(addHistory({ from: fromVal, to: toVal, amount: +amountVal }));
   };
 
   return (
     <>
       <Grid container alignItems='center' justifyContent='baseline'>
-        <Typography variant='h1' mt={2} mb={4}>
+        <Typography variant='h1' mt={4} mb={4}>
           I want to convert
         </Typography>
       </Grid>

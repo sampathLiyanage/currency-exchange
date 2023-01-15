@@ -1,19 +1,20 @@
 import * as actionTypes from './actionTypes';
+import { HistoryRecord, DispatchType } from '.';
 
-export function addHistory(historyRecord: HistoryRecord) {
+export const addHistory = (historyRecord: HistoryRecord) => {
   return async (dispatch: DispatchType) => {
     dispatch({
-      type: actionTypes.ADD_HISTORY,
+      type: actionTypes.CONVERT,
       payload: historyRecord,
     });
   };
-}
+};
 
-export function removeHistory(historyRecord: HistoryRecord) {
+export const removeHistory = (historyRecord: HistoryRecord) => {
   return (dispatch: DispatchType) => {
     dispatch({
       type: actionTypes.REMOVE_HISTORY,
       payload: historyRecord,
     });
   };
-}
+};

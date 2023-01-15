@@ -10,6 +10,7 @@ import theme from '../theme';
 import { TabPanel } from './Tabs';
 import { CurrencyConverter } from './CurrencyConverter';
 import { useNavigate } from 'react-router-dom';
+import ConversionHistory from './ConversionHistory';
 
 interface HomeProps {
   tab?: number;
@@ -60,11 +61,15 @@ const Home = ({ tab = 0 }: HomeProps) => {
         </Grid>
       </Paper>
 
-      <TabPanel value={tab} index={0}>
-        <CurrencyConverter />
+      <TabPanel value={0} index={0}>
+        <Grid item display={tab === 0 ? '' : 'none'}>
+          <CurrencyConverter />
+        </Grid>
       </TabPanel>
-      <TabPanel value={tab} index={1}>
-        Item Two
+      <TabPanel value={1} index={1}>
+        <Grid item display={tab === 1 ? '' : 'none'}>
+          <ConversionHistory />
+        </Grid>
       </TabPanel>
     </ThemeProvider>
   );

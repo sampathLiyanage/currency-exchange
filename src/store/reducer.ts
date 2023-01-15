@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 import * as actionTypes from './actionTypes';
+import { HistoryState, HistoryAction, HistoryRecord } from '.';
 
 const initialState: HistoryState = {
   historyRecords: [],
@@ -7,9 +8,11 @@ const initialState: HistoryState = {
 
 const reducer = (state: HistoryState = initialState, action: HistoryAction): HistoryState => {
   switch (action.type) {
-    case actionTypes.ADD_HISTORY:
+    case actionTypes.CONVERT:
       const newHistoryRecord: HistoryRecord = {
-        id: state.historyRecords.length + 1,
+        id: state.historyRecords.length
+          ? Math.max(...state.historyRecords.map((e) => e.id ?? 0)) + 1
+          : 1,
         datetime: new Date().toUTCString(),
         ...action.payload,
       };
